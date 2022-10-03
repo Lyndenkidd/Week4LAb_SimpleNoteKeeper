@@ -20,28 +20,54 @@ import models.Note;
  */
 public class NoteServlet extends HttpServlet {
 
-    Note note = new Note();
+ 
     
-    @Override
+   @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
-        
         String path = getServletContext().getRealPath("/WEB-INF/note.txt");
-        // to read files
+        String edit = request.getParameter("edit");
+
         BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+        Note note = new Note();
+        note.setTitle(br.readLine());
+        note.setContents(br.readLine());
         
-        // to write to a file
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false))); 
+        
+        request.setAttribute("title", note.getTitle());
+        request.setAttribute("contents", note.getContents());
+        
+        
 
-
+        if (edit == null) {
+            getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp")
+                    .forward(request, response);
+        } else {
+            getServletContext().getRequestDispatcher("/WEB-INF/editnote.jsp")
+                    .forward(request, response);
+        }
     }
-
   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+          String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+          String title = request.getParameter("title");
+           String contents = request.getParameter("contents");
+        
        
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false))); 
+        
+   pw.println(title);
+   pw.println(contents);
+   pw.close();
+        
+       Note note = new Note(title, contents);
+        request.setAttribute("note", note);
+         getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp")
+                   .forward(request, response);
+         
     }
 
   

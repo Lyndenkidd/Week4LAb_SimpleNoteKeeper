@@ -17,10 +17,16 @@
     
     <h2> View Note </h2>
     
-    <p> Title:</p> ${note.title}<br><br>
+    <p>Title:</p> <div> ${note.title}</div>
     
-    <p> Content: </p> <br>
-    ${note.contents}
+   
+    
+    
+    
+    <br><br>
+    
+    <p> Content: </p> <p>${note.contents} </p><br>
+   
     
     <br>
     

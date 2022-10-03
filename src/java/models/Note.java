@@ -13,8 +13,8 @@ public class Note implements Serializable{
     private String contents;
 
     public Note() {
-        title = "";
-        contents = "";
+        this.title = "";
+        this.contents = "";
     }
     
     
@@ -28,14 +28,16 @@ public class Note implements Serializable{
         return title;
     }
 
+        public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getContents() {
         return contents;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
+  
+    
     public void setContents(String contents) {
         this.contents = contents;
     }
